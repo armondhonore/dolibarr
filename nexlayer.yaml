@@ -1,0 +1,33 @@
+application:
+  name: dolibarr
+  pods:
+  - name: app
+    image: dolibarr/dolibarr:latest
+    path: /
+    servicePorts:
+    - 80
+    vars:
+      DOLI_ADMIN_LOGIN: admin
+      DOLI_ADMIN_PASSWORD: nexlayer2024
+      DOLI_DB_HOST: mysql.pod
+      DOLI_DB_USER: dolibarr
+      DOLI_DB_PASSWORD: dolibarr
+      DOLI_DB_NAME: dolibarr
+      DOLI_URL_ROOT: "https://relaxed-weasel-dolibarr.cloud.nexlayer.ai"
+    volumes:
+    - name: dolibarr-html
+      mountPath: /var/www/html/documents
+      size: 5Gi
+  - name: mysql
+    image: mysql:8
+    servicePorts:
+    - 3306
+    vars:
+      MYSQL_DATABASE: dolibarr
+      MYSQL_USER: dolibarr
+      MYSQL_PASSWORD: dolibarr
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+    - name: dolibarr-db
+      mountPath: /var/lib/mysql
+      size: 5Gi
